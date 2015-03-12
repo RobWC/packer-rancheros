@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sudo rancheros-install -d /dev/sda -t generic
+sudo /usr/sbin/rancheros-install
