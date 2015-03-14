@@ -2,8 +2,8 @@
   "builders":[{
     "type": "virtualbox-iso",
     "guest_os_type": "Linux_64",
-    "iso_url": "https://github.com/rancherio/os/releases/download/v0.1.2/rancheros.iso",
-    "iso_checksum": "a9d7a58eb589058072f396dbb9c69710",
+    "iso_url": "iso/rancheros.iso",
+    "iso_checksum": "2a4ac79c8bd7411fa5f0f3cdb6379106",
     "iso_checksum_type": "md5",
     "ssh_username": "rancher",
     "ssh_password": "rancher",
@@ -15,9 +15,14 @@
     "guest_additions_mode":"disable"
   }],
   "provisioners":[{
+    "type":"file",
+    "source":"files/cloud_data.yml",
+    "destination":"/tmp/cloud_data.yml"
+      },{
     "type":"shell",
     "scripts":[
-      "scripts/disk_install.sh"
+      "scripts/disk_install.sh",
+      "scripts/zerodisk.sh"
     ]
   }]
 }
