@@ -1,0 +1,29 @@
+
+{
+  "builders":[{
+    "type": "virtualbox-iso",
+    "guest_os_type": "Linux_64",
+    "iso_url": "iso/rancheros.iso",
+    "iso_checksum": "2a4ac79c8bd7411fa5f0f3cdb6379106",
+    "iso_checksum_type": "md5",
+    "ssh_username": "rancher",
+    "ssh_password": "rancher",
+    "boot_wait":"4s",
+    "ssh_wait_timeout": "30s",
+    "shutdown_command": "echo 'packer' | sudo -S shutdown -P now",
+    "disk_size":"8000",
+    "format":"ova",
+    "guest_additions_mode":"disable"
+  }],
+  "provisioners":[{
+    "type":"file",
+    "source":"files/cloud_data.yml",
+    "destination":"/tmp/cloud_data.yml"
+      },{
+    "type":"shell",
+    "scripts":[
+      "scripts/disk_install.sh",
+      "scripts/zerodisk.sh"
+    ]
+  }]
+}

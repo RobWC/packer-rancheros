@@ -1,5 +1,49 @@
 {
+  "variables":{
+    "make_headless":false
+},
   "builders":[{
+      "type": "vmware-iso",
+      "guest_os_type": "linux",
+      "iso_url": "iso/rancheros.iso",
+      "iso_checksum": "2a4ac79c8bd7411fa5f0f3cdb6379106",
+      "iso_checksum_type": "md5",
+      "ssh_username": "rancher",
+      "ssh_password": "rancher",
+      "headless": "{{user `make_headless`}}",
+      "boot_wait":"4s",
+      "ssh_wait_timeout": "30s",
+      "shutdown_command": "sudo shutdown -h now",
+      "disk_size":"8000",
+      "vmdk_name":"rancheros",
+      "vm_name":"racheros",
+      "vmx_data":{
+          "memsize":"1024",
+          "numvcpus":"1",
+          "cpuid.coresPerSocket":"2"
+      }
+  },{
+      "type": "qemu",
+      "iso_url": "iso/rancheros.iso",
+      "iso_checksum": "2a4ac79c8bd7411fa5f0f3cdb6379106",
+      "iso_checksum_type": "md5",
+      "ssh_username": "rancher",
+      "ssh_password": "rancher",
+      "headless": "{{user `make_headless`}}",
+      "boot_wait":"4s",
+      "ssh_wait_timeout": "30s",
+      "shutdown_command": "sudo shutdown -h now",
+      "disk_size":"8000",
+      "disk_interface": "scsi",
+      "format":"qcow2",
+      "accelerator":"kvm",
+      "vm_name":"rancheros",
+      "qemuargs":[
+          ["-m","1024M"],
+          ["-cpu","host"],
+          ["-smp","2"]
+      ]
+  },{
     "type": "virtualbox-iso",
     "guest_os_type": "Linux_64",
     "iso_url": "iso/rancheros.iso",
@@ -7,12 +51,17 @@
     "iso_checksum_type": "md5",
     "ssh_username": "rancher",
     "ssh_password": "rancher",
+    "headless": "{{user `make_headless`}}",
     "boot_wait":"4s",
     "ssh_wait_timeout": "30s",
-    "shutdown_command": "echo 'packer' | sudo -S shutdown -P now",
+    "shutdown_command": "sudo shutdown -h now",
     "disk_size":"8000",
     "format":"ova",
-    "guest_additions_mode":"disable"
+    "guest_additions_mode":"disable",
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--memory", "1024"],
+      ["modifyvm", "{{.Name}}", "--cpus", "2"]
+    ]
   }],
   "provisioners":[{
     "type":"file",
@@ -24,5 +73,9 @@
       "scripts/disk_install.sh",
       "scripts/zerodisk.sh"
     ]
-  }]
+  }],
+  "post-processors": [{
+      "type": "vagrant",
+      "output": "vagrant_boxes/netdevops_{{.Provider}}.box"
+   }]
 }

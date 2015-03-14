@@ -1,5 +1,7 @@
 packer_cache
 *.iso
+*.box
 packer/output-virtualbox-iso/*
-output-vmware-iso/*
-vagrant_boxes/*
+packer/output-vmware-iso/*
+packer/output-qemu/*
+vagrant_boxes/*.box
