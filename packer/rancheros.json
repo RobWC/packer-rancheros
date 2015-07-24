@@ -1,16 +1,13 @@
 {
-  "variables":{
-    "make_headless":false
-},
   "builders":[{
       "type": "vmware-iso",
       "guest_os_type": "linux",
       "iso_url": "iso/rancheros.iso",
-      "iso_checksum": "aad1763fcbc4a73c62434e76ea51eaaf",
+      "iso_checksum": "63b54370f8c5f8645d6088be15ab07b0",
       "iso_checksum_type": "md5",
       "ssh_username": "rancher",
       "ssh_password": "rancher",
-      "headless": "{{user `make_headless`}}",
+      "headless": false,
       "boot_wait":"4s",
       "ssh_wait_timeout": "30s",
       "shutdown_command": "sudo shutdown -h now",
@@ -25,11 +22,11 @@
   },{
       "type": "qemu",
       "iso_url": "iso/rancheros.iso",
-      "iso_checksum": "aad1763fcbc4a73c62434e76ea51eaaf",
+      "iso_checksum": "63b54370f8c5f8645d6088be15ab07b0",
       "iso_checksum_type": "md5",
       "ssh_username": "rancher",
       "ssh_password": "rancher",
-      "headless": "{{user `make_headless`}}",
+      "headless": false,
       "boot_wait":"4s",
       "ssh_wait_timeout": "30s",
       "shutdown_command": "sudo shutdown -h now",
@@ -47,11 +44,11 @@
     "type": "virtualbox-iso",
     "guest_os_type": "Linux_64",
     "iso_url": "iso/rancheros.iso",
-    "iso_checksum": "aad1763fcbc4a73c62434e76ea51eaaf",
+    "iso_checksum": "63b54370f8c5f8645d6088be15ab07b0",
     "iso_checksum_type": "md5",
     "ssh_username": "rancher",
     "ssh_password": "rancher",
-    "headless": "{{user `make_headless`}}",
+    "headless": false,
     "boot_wait":"4s",
     "ssh_wait_timeout": "30s",
     "shutdown_command": "sudo shutdown -h now",
@@ -76,6 +73,6 @@
   }],
   "post-processors": [{
       "type": "vagrant",
-      "output": "vagrant_boxes/netdevops_{{.Provider}}.box"
+      "output": "vagrant_boxes/rancheros_{{.Provider}}.box"
    }]
 }

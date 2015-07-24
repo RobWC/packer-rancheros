@@ -1,8 +1,6 @@
-dns: [8.8.8.8, 8.8.4.4]
-state:
-  fstype: auto
-  dev: LABEL=RANCHER_STATE
-  required: false
-system_docker_args: [docker, -d, -s, overlay, -b, none, --restart=alwaus, -H, 'unix:///var/run/system-docker.sock']
-enabledAddons:
-- ubuntu-console
+rancher:
+    network:
+        dns:
+          nameservers:
+            -8.8.8.8
+            -8.8.4.4
