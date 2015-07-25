@@ -32,7 +32,7 @@
       "shutdown_command": "sudo shutdown -h now",
       "disk_size":"8000",
       "disk_interface": "scsi",
-      "format":"qcow2",
+      "format":"raw",
       "accelerator":"kvm",
       "vm_name":"rancheros",
       "qemuargs":[
@@ -73,6 +73,10 @@
   }],
   "post-processors": [{
       "type": "vagrant",
-      "output": "vagrant_boxes/rancheros_{{.Provider}}.box"
-   }]
+      "output": "vagrant_boxes/rancheros_{{ .Provider }}.box"
+   },{
+       "type":"compress",
+       "output": "output/rancheros.img.gz",
+        "only":["qemu"]
+       }]
 }

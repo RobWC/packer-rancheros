@@ -1,6 +1,10 @@
+#cloud-config
 rancher:
-    network:
-        dns:
-          nameservers:
-            -8.8.8.8
-            -8.8.4.4
+  network:
+    interfaces:
+      eth0:
+        dhcp: true
+   dns:
+    nameservers:
+      -8.8.8.8
+      -8.8.4.4
